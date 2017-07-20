@@ -17,8 +17,9 @@ class CreateAreasTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->integer('city_id');
+            $table->unique('name','city_id');
 
         });
     }

@@ -14,8 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/{id}', function ($id) {
-    $details=App\Category::find($id);
-    print_r($details);
-    return 'Hi there';
-});
+// Route::get('/{id}', function ($id) {
+//     $details=App\Category::find($id);
+//     print_r($details);
+//     return 'Hi there';
+// });
+Route::get('/test', 'TestController@index');

@@ -17,7 +17,7 @@ class CreateCitiesTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('name');
-            $table->string('slug');
+            $table->string('slug')->nullable();
         });
     }
 
