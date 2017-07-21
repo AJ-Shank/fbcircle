@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <input type="text" onblur="populate(this)" />
+    </div>
+    <div id="map"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+    var map, marker;
+    function init(){
+    map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 16,
+    });
+    marker = new google.maps.Marker({
+      draggable:true,
+      title: 'Hello World!'
+    });
+  }
+    function escapeRegExp(str) {
+        return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+    }
+    function replaceAll(str, find, replace) {
+        return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+    }
+      function populate(inp){
+        console.log(inp.value);
+        var search = replaceAll(inp.value,' ','+');
+        console.log('search= '+search);
+        $.ajax({
+
+            type:'GET',
+            url:'https://maps.googleapis.com/maps/api/geocode/json',
+            data:{'address':search,'key':'AIzaSyBw-qIQtqy0wQRQCAHbad8lrHa-6vcsbQk'},
+            success:function(data){
+                console.log(data['results'][0]['geometry']['location']);
+                var loc = data['results'][0]['geometry']['location'];
+                initMap(loc['lat'],loc['lng']);
+            }
+          });
+      }
+      function initMap(lat,long) {
+        var myLatLng = new google.maps.LatLng(lat,long);
+        console.log(myLatLng.lat(),myLatLng.lng());
+        map.setCenter(myLatLng);
+        marker.setPosition(myLatLng);
+        marker.setMap(map);
+        google.maps.event.addListener(marker, 'dragend', function(ev){
+            var pos = marker.getPosition();
+            console.log('lat= '+pos.lat());
+            console.log('lng= '+pos.lng());
+        });
+      }
+
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBw-qIQtqy0wQRQCAHbad8lrHa-6vcsbQk&callback=init">
+    </script>
+  </body>
+</html>
