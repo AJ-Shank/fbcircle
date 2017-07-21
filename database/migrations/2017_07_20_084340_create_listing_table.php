@@ -20,20 +20,21 @@ class CreateListingTable extends Migration
             $table->integer('status')->comment('1=published,2=review,3=draft');
             $table->timestamp('published_on')->nullable();
             $table->integer('type')->comment('11=Wholeseller,12=Retailer,13=distributer');
-            $table->string('slug');
-            $table->text('description');
-            $table->string('other_details')->comment('Serialized array of year established, website etc');
+            $table->string('slug')->nullable();
+            $table->text('description')->nullable();
+            $table->string('other_details')->comment('Serialized array of year established, website etc')->nullable();
             $table->integer('owner_id')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('views_count')->default('0');
             $table->integer('contact_request_count')->default('0');
-            $table->integer('locality_id');
-            $table->string('display_address');
-            $table->double('latitude');
-            $table->double('longitude');
-            $table->boolean('show_hours_of_operation');
-            $table->boolean('show_primary_phone');
-            $table->boolean('show_primary_email');
+            $table->integer('locality_id')->nullable();
+            $table->string('display_address')->nullable();
+            $table->double('latitude')->nullable();
+            $table->double('longitude')->nullable();
+            $table->boolean('show_hours_of_operation')->nullable();
+            $table->boolean('show_primary_phone')->nullable();
+            $table->boolean('show_primary_email')->nullable();
+            $table->boolean('verified')->nullable();
 
         });
     }

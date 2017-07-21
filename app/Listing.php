@@ -8,13 +8,15 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class Listing extends Model
 {
     const PUBLISHED = 1;
-    const REVIEWED = 2;
+    const REVIEW = 2;
     const DRAFT = 3;
     const WHOLESALER = 11;
     const RETAILER = 12;
     const DISTRIBUTER = 13;
 
-    $protected $table="listings";
+    protected $table="listings";
+
+    protected $fillable=['title','status','type'];
 
     public function owner(){
       return $this->hasOne('App\User','owner_id');
